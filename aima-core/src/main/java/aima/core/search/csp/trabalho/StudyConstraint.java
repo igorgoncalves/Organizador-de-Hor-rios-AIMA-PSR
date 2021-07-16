@@ -5,7 +5,6 @@ import aima.core.search.csp.Constraint;
 import aima.core.search.csp.Variable;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.stream.Collectors;
 import java.util.List;
 
@@ -18,13 +17,11 @@ import java.util.List;
 public class StudyConstraint<VAR extends Variable, VAL> implements Constraint<VAR, VAL> {
 
 	private VAR var;
-	private VAL val;
+
 	private List<VAR> scope;
 
-	public StudyConstraint(VAR var, VAL val) {
+	public StudyConstraint(VAR var ){
 		this.var = var;
-		this.val = val;
-
 		scope = new ArrayList<>(1);
 		scope.add(var);
 
@@ -44,12 +41,12 @@ public class StudyConstraint<VAR extends Variable, VAL> implements Constraint<VA
 			List<VAL> values = variables.stream().map(var1 -> assignment.getValue(var1)).collect(Collectors.toList());
 			for (int i = 0; i < values.size(); i++) {
 				var current = values.get(i);
-				if (current instanceof StudyTIme && ((StudyTIme) val).disciplina.getCodigo().equals(((StudyTIme) current).disciplina.getCodigo())) {
+				if (current instanceof StudyTIme && ((StudyTIme) currentValue).disciplina.getCodigo().equals(((StudyTIme) current).disciplina.getCodigo())) {
 					count++;
 				}
 			}
 
-			return count <= ((StudyTIme) val).numberBlock;
+			return count <= ((StudyTIme) currentValue).numberBlock;
 		}
 		return true;
 

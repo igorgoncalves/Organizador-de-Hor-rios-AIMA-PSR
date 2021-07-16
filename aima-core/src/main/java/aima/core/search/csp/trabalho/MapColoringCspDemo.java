@@ -5,6 +5,7 @@ import aima.core.search.csp.examples.MapCSP;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Optional;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -17,15 +18,12 @@ import java.util.stream.Collectors;
  */
 
 
-
-
-
 public class MapColoringCspDemo {
 	public static void main(String[] args) {
-		CSP<Variable, Atividade> csp = (CSP) new HorariosDiscente(3);
-		CspListener.StepCounter<Variable, Atividade> stepCounter = new CspListener.StepCounter<>();
-		CspSolver<Variable, Atividade> solver;
-		Optional<Assignment<Variable, Atividade>> solution;
+		CSP<Horario, Atividade> csp = (CSP) new HorariosDiscente(3);
+		CspListener.StepCounter<Horario, Atividade> stepCounter = new CspListener.StepCounter<>();
+		CspSolver<Horario, Atividade> solver;
+		Optional<Assignment<Horario, Atividade>> solution;
 		
 		solver = new MinConflictsSolver<>(1000);
 		solver.addCspListener(stepCounter);
@@ -33,33 +31,24 @@ public class MapColoringCspDemo {
 		System.out.println("Map Coloring (Minimum Conflicts)");
 		solution = solver.solve(csp);
 //		solution.ifPresent(System.out::println);
-		solution.ifPresent(variableStringAssignment -> {
-			 var value = variableStringAssignment.getVariables().stream().map(
-					variable -> variableStringAssignment.getValue(variable).getName()
-			).collect(Collectors.toList());
-			 printTable(new ArrayList<>(value));
-		});
+		solution.ifPresent(horarioAtividadeAssignment -> showSolution(horarioAtividadeAssignment));
 		System.out.println(stepCounter.getResults() + "\n");
 //
-		solver = new FlexibleBacktrackingSolver<Variable, Atividade>().setAll();
+		solver = new FlexibleBacktrackingSolver<Horario, Atividade>().setAll();
 		solver.addCspListener(stepCounter);
 		stepCounter.reset();
 		System.out.println("Map Coloring (Backtracking + MRV & DEG + LCV + AC3)");
 		solution = solver.solve(csp);
-		solution.ifPresent(variableStringAssignment -> {
-			var value = variableStringAssignment.getVariables().stream().map(
-					variable -> variableStringAssignment.getValue(variable).getName()
-			).collect(Collectors.toList());
-			printTable(new ArrayList<>(value));
-		});
+		solution.ifPresent(horarioAtividadeAssignment -> showSolution(horarioAtividadeAssignment));
 		System.out.println(stepCounter.getResults() + "\n");
 //
-		solver = new FlexibleBacktrackingSolver<Variable, Atividade>().set(CspHeuristics.mrvDeg());
+		solver = new FlexibleBacktrackingSolver<Horario, Atividade>().set(CspHeuristics.mrvDeg());
 		solver.addCspListener(stepCounter);
 		stepCounter.reset();
 		System.out.println("Map Coloring (Backtracking + MRV & DEG)");
 		solution = solver.solve(csp);
-		solution.ifPresent(System.out::println);
+//		solution.ifPresent(System.out::println);
+		solution.ifPresent(horarioAtividadeAssignment -> showSolution(horarioAtividadeAssignment));
 		System.out.println(stepCounter.getResults() + "\n");
 //
 		solver = new FlexibleBacktrackingSolver<>();
@@ -67,10 +56,20 @@ public class MapColoringCspDemo {
 		stepCounter.reset();
 		System.out.println("Map Coloring (Backtracking)");
 		solution = solver.solve(csp);
-		solution.ifPresent(System.out::println);
+//		solution.ifPresent(System.out::println);
+		solution.ifPresent(horarioAtividadeAssignment -> showSolution(horarioAtividadeAssignment));
 		System.out.println(stepCounter.getResults() + "\n");
 	}
 
+	public static void showSolution(Assignment<Horario, Atividade> solution){
+		var variables = solution.getVariables();
+		Collections.sort(variables, Horario::compareTo);
+		var value = variables.stream().map(
+				variable -> {
+					return solution.getValue(variable).getName(); }
+		).collect(Collectors.toList());
+		printTable(new ArrayList<>(value));
+	}
 
 	 public static void printTable(ArrayList<String> values){
 		 String[] dias = {"Seg", "Ter", "Qua", "Qui", "Sex", "Sab"};

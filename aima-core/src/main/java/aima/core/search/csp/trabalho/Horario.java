@@ -2,7 +2,10 @@ package aima.core.search.csp.trabalho;
 
 import aima.core.search.csp.Variable;
 
-public class Horario extends Variable {
+import java.util.ArrayList;
+import java.util.Arrays;
+
+public class Horario extends Variable implements Comparable< Horario > {
     private String dia;
     private String hora;
 
@@ -27,4 +30,17 @@ public class Horario extends Variable {
                 ", hora='" + hora + '\'' +
                 '}';
     }
+
+    @Override
+    public int compareTo(Horario o) {
+        ArrayList<String> diasList = new ArrayList<String>(Arrays.asList("Seg", "Ter", "Qua", "Qui", "Sex", "Sab"));
+        var compare = Integer.compare(diasList.indexOf(this.dia), diasList.indexOf(o.dia)) ;
+        if(compare == 0){
+            compare = this.hora.compareTo(o.hora) * -1;
+        }
+
+        return compare;
+    }
+
+
 }
