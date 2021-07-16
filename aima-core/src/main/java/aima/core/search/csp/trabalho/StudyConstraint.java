@@ -36,17 +36,17 @@ public class StudyConstraint<VAR extends Variable, VAL> implements Constraint<VA
 	public boolean isSatisfiedWith(Assignment<VAR, VAL> assignment) {
 		long count = 0;
 		var currentValue  = assignment.getValue(var);
-		if(currentValue instanceof StudyTIme){
+		if(currentValue instanceof AtividadeDefinidaDiscente){
 			var variables = assignment.getVariables();
 			List<VAL> values = variables.stream().map(var1 -> assignment.getValue(var1)).collect(Collectors.toList());
 			for (int i = 0; i < values.size(); i++) {
 				var current = values.get(i);
-				if (current instanceof StudyTIme && ((StudyTIme) currentValue).disciplina.getCodigo().equals(((StudyTIme) current).disciplina.getCodigo())) {
+				if (current instanceof AtividadeDefinidaDiscente && (currentValue).equals(current)) {
 					count++;
 				}
 			}
 
-			return count <= ((StudyTIme) currentValue).numberBlock;
+			return count <= ((AtividadeDefinidaDiscente) currentValue).numberBlock;
 		}
 		return true;
 

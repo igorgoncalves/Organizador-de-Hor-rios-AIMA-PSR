@@ -4,52 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Disciplina extends Atividade {
+public class Disciplina extends AtividadeFixa {
     private String codigo;
     private int numHorarios;
-    private final ArrayList<Horario> horarios = new ArrayList<>();
 
-    public Disciplina() {
-        super("name");
-    }
-
-    public Disciplina(String codigo) {
-        super(codigo);
-        this.codigo = codigo;
-    }
-
-    public Disciplina(String codigo, int numHorarios) {
-        super(codigo);
-        this.codigo = codigo;
-        this.numHorarios = numHorarios;
-    }
-
-    public Disciplina(String codigo, Horario horario) {
-        super(codigo);
-        this.codigo = codigo;
-        this.horarios.add(horario);
-        this.numHorarios = this.horarios.size();
-    }
 
     public Disciplina(String codigo, List<Horario> horarios) {
-        super(codigo);
+        super(codigo, horarios);
         this.codigo = codigo;
-        this.horarios.addAll(horarios);
-        this.numHorarios = this.horarios.size();
-    }
-
-    public void adicionarHorario(Horario horario) {
-        this.horarios.add(horario);
-    }
-
-    public void adicionarHorario(List<Horario> horario) {
-        this.horarios.addAll(horario);
-        this.numHorarios = this.horarios.size();
-    }
-
-    @Override
-    public String toString() {
-        return codigo ;
+        super.setHorarios(horarios);
+        this.numHorarios = this.getHorarios().size();
     }
 
     public String getCodigo() {
@@ -58,14 +22,6 @@ public class Disciplina extends Atividade {
 
     public void setCodigo(String codigo) {
         this.codigo = codigo;
-    }
-
-    public ArrayList<Horario> getHorarios() {
-        return horarios;
-    }
-
-    public void setHorario(Horario horario) {
-        this.horarios.add(horario);
     }
 
     @Override

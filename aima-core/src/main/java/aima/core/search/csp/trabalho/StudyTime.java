@@ -2,12 +2,12 @@ package aima.core.search.csp.trabalho;
 
 import java.util.Objects;
 
-class PIBIT extends  Atividade {
+class StudyTime extends  AtividadeDefinidaDiscente {
     final Disciplina disciplina;
     final int numberBlock;
 
-    PIBIT(Disciplina disciplina, int numberBlock) {
-        super("Study " + disciplina.getCodigo());
+    StudyTime(Disciplina disciplina, int numberBlock) {
+        super("Study " + disciplina.getCodigo(), numberBlock);
         this.disciplina = disciplina;
         this.numberBlock = numberBlock;
     }
@@ -21,7 +21,7 @@ class PIBIT extends  Atividade {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        PIBIT studyTIme = (PIBIT) o;
+        StudyTime studyTIme = (StudyTime) o;
         return numberBlock == studyTIme.numberBlock && Objects.equals(disciplina.getCodigo(), studyTIme.disciplina.getCodigo());
     }
 

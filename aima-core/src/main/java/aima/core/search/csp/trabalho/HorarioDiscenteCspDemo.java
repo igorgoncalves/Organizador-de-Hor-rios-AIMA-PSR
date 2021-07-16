@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
  */
 
 
-public class MapColoringCspDemo {
+public class HorarioDiscenteCspDemo {
 	public static void main(String[] args) {
 		CSP<Horario, Atividade> csp = (CSP) new HorariosDiscente(3);
 		CspListener.StepCounter<Horario, Atividade> stepCounter = new CspListener.StepCounter<>();
@@ -81,17 +81,17 @@ public class MapColoringCspDemo {
 		 };
 
 		 System.out.print("|");
-		 int sizeTable = horas.length * 16;
+		 int sizeTable = (horas.length * 14) + 100;
 		 for (int i = 0; i < sizeTable; i++) {
 			 System.out.print("-");
 		 }
 		 System.out.print("|");
 		 System.out.println();
 		 System.out.print("| ");
-		 System.out.print("   ");
+		 System.out.print("D/H");
 		 System.out.print(" | ");
 		 for (int i = 0; i < horas.length; i++) {
-			 System.out.print(String.format("%14s", horas[i]));
+			 System.out.print(centerString(14, horas[i]));
 			 System.out.print(" | ");
 		 }
 		 for (int i = 0; i < dias.length; i++) {
@@ -101,14 +101,15 @@ public class MapColoringCspDemo {
 			 System.out.print(dias[i]);
 			 System.out.print(" | ");
 			 for (int j = 0; j < horas.length; j++) {
-				 String cel = String.format("%14s", values.get(i * horas.length + j));
+				 String cel = centerString(14, values.get(i * horas.length + j));
 				 System.out.print(cel);
 				 System.out.print(" | ");
 			 }
 
 		 }
-
-
-
 	 }
+
+	 public static String centerString (int width, String s) {
+		return String.format("%-" + width  + "s", String.format("%" + (s.length() + (width - s.length()) / 2) + "s", s));
+	}
 }
