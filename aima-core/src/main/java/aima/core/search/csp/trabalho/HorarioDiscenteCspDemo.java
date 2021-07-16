@@ -90,10 +90,21 @@ public class HorarioDiscenteCspDemo {
 		 System.out.print("| ");
 		 System.out.print("D/H");
 		 System.out.print(" | ");
+
+
 		 for (int i = 0; i < horas.length; i++) {
 			 System.out.print(centerString(14, horas[i]));
 			 System.out.print(" | ");
 		 }
+
+		 System.out.println("");
+
+		 System.out.print("|");
+		 for (int i = 0; i < sizeTable; i++) {
+			 System.out.print("-");
+		 }
+		 System.out.print("|");
+
 		 for (int i = 0; i < dias.length; i++) {
 			 System.out.print("|");
 			 System.out.println();
@@ -105,8 +116,12 @@ public class HorarioDiscenteCspDemo {
 				 System.out.print(cel);
 				 System.out.print(" | ");
 			 }
-
 		 }
+		 System.out.println("|");
+		 for (int i = 0; i < sizeTable; i++) {
+			 System.out.print("-");
+		 }
+		 System.out.print("|");
 	 }
 
 	 public static String centerString (int width, String s) {

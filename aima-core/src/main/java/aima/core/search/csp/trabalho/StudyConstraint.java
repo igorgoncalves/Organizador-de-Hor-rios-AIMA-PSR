@@ -46,7 +46,7 @@ public class StudyConstraint<VAR extends Variable, VAL> implements Constraint<VA
 				}
 			}
 
-			return count <= ((AtividadeDefinidaDiscente) currentValue).numberBlock;
+			return count < ((AtividadeDefinidaDiscente) currentValue).numberBlock;
 		}
 		return true;
 

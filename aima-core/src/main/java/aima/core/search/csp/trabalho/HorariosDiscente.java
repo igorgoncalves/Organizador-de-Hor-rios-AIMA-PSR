@@ -178,7 +178,7 @@ public class HorariosDiscente extends CSP<Horario, Atividade> {
 
         Assignment<Horario, Atividade> atividadeHorario = new Assignment<>();
         var geralDomain = new ArrayList<Atividade>();
-        geralDomain.add(new FreeTime());
+
 
         for (Atividade atividade : atividades) {
 
@@ -199,7 +199,7 @@ public class HorariosDiscente extends CSP<Horario, Atividade> {
             }
         }
 
-
+        geralDomain.add(new FreeTime());
         for (Horario h : horarios) {
             setDomain(h, new Domain<>(geralDomain));
             addConstraint(new StudyConstraint<>(h));
