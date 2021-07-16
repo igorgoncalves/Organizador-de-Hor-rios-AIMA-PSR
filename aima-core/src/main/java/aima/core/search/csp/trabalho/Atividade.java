@@ -1,5 +1,12 @@
 package aima.core.search.csp.trabalho;
 
-import aima.core.search.csp.Variable;
+abstract class Atividade {
+    final  private String name;
+    Atividade(String name) {
+        this.name = name;
+    }
 
-abstract class Atividade {}
+    public String getName() {
+        return name;
+    }
+}

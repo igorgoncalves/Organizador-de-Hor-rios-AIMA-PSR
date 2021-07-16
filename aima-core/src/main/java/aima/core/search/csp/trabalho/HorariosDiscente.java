@@ -96,11 +96,12 @@ public class HorariosDiscente extends CSP<Horario, Atividade> {
 
                 StudyTIme studyTimeA = new StudyTIme(comp0481, 3);
 
-                materias.add(new FreeTime());
-                materias.add(comp0408);
-                materias.add(comp0455);
-                materias.add(comp0481);
                 materias.add(studyTimeA);
+                materias.add(new FreeTime());
+//                materias.add(comp0408);
+//                materias.add(comp0455);
+//                materias.add(comp0481);
+
 
 
                 this.materiasDominio = new Domain<>(materias);
@@ -112,29 +113,23 @@ public class HorariosDiscente extends CSP<Horario, Atividade> {
 
                 // Definimos o domínio de cada variável como o conjunto de matérias
                 for (Horario h : horarios) {
-                    setDomain(h, this.materiasDominio);
-
                     if (comp0408.getHorarios().contains(h)) {
                         comp0408Horario.add(h, comp0408);
-                        addConstraint(new EqualConstraint<>(h, comp0408));
+                        setDomain(h, new Domain<>(List.of(comp0408)));
                     } else if(comp0455.getHorarios().contains(h)) {
                         comp0455Horario.add(h, comp0455);
-                        addConstraint(new EqualConstraint<>(h, comp0455));
+                        setDomain(h, new Domain<>(List.of(comp0455)));
+
                     } else if(comp0481.getHorarios().contains(h)) {
                         comp0481Horario.add(h, comp0481);
-                        addConstraint(new EqualConstraint<>(h, comp0481));
+                        setDomain(h, new Domain<>(List.of(comp0455)));
                     } else {
-                        addConstraint(new FixedClassConstraint<>(h));
-                        addConstraint(new StudyConstraint<>(h,studyTimeA ));
+                        setDomain(h, this.materiasDominio);
+                        addConstraint(new StudyConstraint<>(h, studyTimeA));
+
                     }
 
                 }
-
-
-//                for (Horario h : comp0481.getHorarios()) {
-//                    comp0481Horario.add(h, comp0481);
-//                    addConstraint(new EqualConstraint<>(h, comp0455));
-//                }
             }
             // Caso de 5 disciplinas
             case 5 -> {

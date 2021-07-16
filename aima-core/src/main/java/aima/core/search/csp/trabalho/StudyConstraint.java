@@ -5,7 +5,10 @@ import aima.core.search.csp.Constraint;
 import aima.core.search.csp.Variable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 import java.util.List;
+
 
 /**
  * Represents a binary constraint which forbids equal values.
@@ -20,6 +23,7 @@ public class StudyConstraint<VAR extends Variable, VAL> implements Constraint<VA
 
 	public StudyConstraint(VAR var, VAL val) {
 		this.var = var;
+		this.val = val;
 
 		scope = new ArrayList<>(1);
 		scope.add(var);
@@ -33,18 +37,19 @@ public class StudyConstraint<VAR extends Variable, VAL> implements Constraint<VA
 
 	@Override
 	public boolean isSatisfiedWith(Assignment<VAR, VAL> assignment) {
-		long count;
-		var value  = assignment.getValue(var);
-		if(value instanceof StudyTIme){
-//			for (VAR v: assignment.getVariables()) {
-//				VAL va = assignment.getValue(v);
-//				if(val instanceof StudyTIme && va instanceof StudyTIme && ((StudyTIme) va).disciplina.getCodigo() == ((StudyTIme) val).disciplina.getCodigo()){
-//					count++;
-//				}
-//			}
+		long count = 0;
+		var currentValue  = assignment.getValue(var);
+		if(currentValue instanceof StudyTIme){
+			var variables = assignment.getVariables();
+			List<VAL> values = variables.stream().map(var1 -> assignment.getValue(var1)).collect(Collectors.toList());
+			for (int i = 0; i < values.size(); i++) {
+				var current = values.get(i);
+				if (current instanceof StudyTIme && ((StudyTIme) val).disciplina.getCodigo().equals(((StudyTIme) current).disciplina.getCodigo())) {
+					count++;
+				}
+			}
 
-			count =  assignment.getVariables().stream().filter(var1 -> value.equals(assignment.getValue(var1))).count();
-			return count <= ((StudyTIme) value).numberBlock;
+			return count <= ((StudyTIme) val).numberBlock;
 		}
 		return true;
 

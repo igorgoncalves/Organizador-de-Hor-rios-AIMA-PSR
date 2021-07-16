@@ -9,24 +9,30 @@ public class Disciplina extends Atividade {
     private int numHorarios;
     private final ArrayList<Horario> horarios = new ArrayList<>();
 
-    public Disciplina() {}
+    public Disciplina() {
+        super("name");
+    }
 
     public Disciplina(String codigo) {
+        super(codigo);
         this.codigo = codigo;
     }
 
     public Disciplina(String codigo, int numHorarios) {
+        super(codigo);
         this.codigo = codigo;
         this.numHorarios = numHorarios;
     }
 
     public Disciplina(String codigo, Horario horario) {
+        super(codigo);
         this.codigo = codigo;
         this.horarios.add(horario);
         this.numHorarios = this.horarios.size();
     }
 
     public Disciplina(String codigo, List<Horario> horarios) {
+        super(codigo);
         this.codigo = codigo;
         this.horarios.addAll(horarios);
         this.numHorarios = this.horarios.size();
@@ -43,10 +49,7 @@ public class Disciplina extends Atividade {
 
     @Override
     public String toString() {
-        return "Disciplina{" +
-                "codigo='" + codigo + '\'' +
-//                ", horarios=" + horarios +
-                "}";
+        return codigo ;
     }
 
     public String getCodigo() {
